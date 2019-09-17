@@ -1,0 +1,2 @@
+cd /Users/shimizu/Documents/Programing/MySQL_Docker
+docker-compose up -d
