@@ -18,5 +18,12 @@ public class Stock {
 		this.name = name;
 	}
 
+	public int getStockCode() {
+		return stockCode;
+	}
+
+	public void setStockCode(int stockCode) {
+		this.stockCode = stockCode;
+	}
 }
 	

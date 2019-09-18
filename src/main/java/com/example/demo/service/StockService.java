@@ -6,7 +6,9 @@ import java.util.List;
 
 import com.example.demo.constant.Const;
 import com.example.demo.entity.Price;
+import com.example.demo.entity.Stock;
 import com.example.demo.repository.PriceRepository;
+import com.example.demo.repository.StockRepository;
 
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
@@ -19,6 +21,9 @@ import org.springframework.stereotype.Service;
 public class StockService {
 	@Autowired
 	private PriceRepository priceRepository;
+
+	@Autowired
+	private StockRepository stockRepository;
 
 	public List<Price> get_rate() {
 
@@ -33,12 +38,32 @@ public class StockService {
 
 	public void add_stock(int stockCode) throws Exception {
 
-		ArrayList<Price> liPrice = new ArrayList<Price>();
-		SimpleDateFormat sdf     = new SimpleDateFormat("yyyy-MM-dd");
-
 		// 株価取得サイトにGETでrequest飛ばす {baseUrl}/{銘柄コード}
 		String url = Const.Stock.STOCK_SOURCE_URL.replace("{stockCode}", Integer.toString(stockCode));
 		Document doc = Jsoup.connect(url).get();
+
+		// add_stock_priceTable(doc,stockCode);
+		add_stock_stockTable(doc,stockCode);
+	}
+
+	private void add_stock_stockTable(Document doc,int stockCode){
+
+		Stock stock = new Stock();
+
+		Element nameElem = doc.select("."+Const.Stock.STOCK_NAME_CLASS).first();
+		Element spanElem = nameElem.select("span").first();
+		System.out.println("stockName="+spanElem.text());
+
+		stock.setName(spanElem.text());
+		stock.setStockCode(stockCode);
+
+		stockRepository.save(stock);
+	}
+
+	private void add_stock_priceTable(Document doc,int stockCode) throws Exception {
+
+		ArrayList<Price> liPrice = new ArrayList<Price>();
+		SimpleDateFormat sdf     = new SimpleDateFormat("yyyy-MM-dd");
 
 		// 株価が記載されている<table>タグのClass名でテーブルタグ要素を特定
 		Elements tableElems = doc.getElementsByClass(Const.Stock.STOCK_TABLE_CLASS);
@@ -90,8 +115,8 @@ public class StockService {
 			System.out.println(pr.toString());
 			priceRepository.save(pr);
 		}
-	}
 
+	}
 
 
 }
