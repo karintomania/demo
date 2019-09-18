@@ -86,7 +86,6 @@ public class StockService {
 
 
 		// DBにinsert
-		System.out.println("リストのサイズ"+liPrice.size());
 		for(Price pr : liPrice){
 			System.out.println(pr.toString());
 			priceRepository.save(pr);
