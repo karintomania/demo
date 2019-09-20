@@ -29,8 +29,10 @@ public class StockController {
 	// S02_チャート表示画面の表示
 	@RequestMapping("/chart")
 	public ModelAndView get_rate(@RequestParam int stockCode, ModelAndView mav) {
-		List<Price> listPrice = stockService.get_rate();
+		System.out.println(Integer.toString(stockCode));
+		List<Price> listPrice = stockService.get_rate(stockCode);
 
+		System.out.println("最初の価格を文字列で"+listPrice.get(0).toString());
 		mav.setViewName("chart");
 		mav.addObject("listPrice", listPrice);
 		return mav;
@@ -48,11 +50,9 @@ public class StockController {
 	@RequestMapping("/addStockComplete")
 	public ModelAndView add_stock_complete(@RequestParam int stockCode,ModelAndView mav) throws Exception {
 
-		String stockCodeStr = Integer.toString(stockCode);
-
 		stockService.add_stock(stockCode);
 		mav.setViewName("addStockComplete");
-		mav.addObject("stockCodeStr",stockCodeStr);
+		mav.addObject("stockCodeStr",Integer.toString(stockCode));
 		return mav;
 		
     }

@@ -17,9 +17,6 @@
 <!--- Google Chartの読み込み --->
 <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
 <script type="text/javascript" th:inline="javascript">
-/*<![CDATA[*/
-
-
 
 
 window.onload  = function(){
@@ -31,13 +28,14 @@ window.onload  = function(){
 
 function mainChart(){
 
-	// var stockData = /*[[${listPrice}]]*/ null;
-	
+/*<![CDATA[*/
+	var stockData = /*[[${listPrice}]]*/ null;
+/*]]>*/
 	// まずはJSのみを完成させるためにベタ打ちしてる
-	var stockData = [{"stockCode":1234,"date":"2019-07-12 09:00:00","highPrice":3068,"lowPrice":3030,"openPrice":3065,"closePrice":3060,"volume":22200},
-					{"stockCode":1234,"date":"2019-07-11 09:00:00","highPrice":3095,"lowPrice":3020,"openPrice":3030,"closePrice":3065,"volume":21100},
-					{"stockCode":1234,"date":"2019-07-12 09:00:00","highPrice":3068,"lowPrice":3030,"openPrice":3065,"closePrice":3060,"volume":22200},
-					{"stockCode":1234,"date":"2019-07-11 09:00:00","highPrice":3095,"lowPrice":3020,"openPrice":3030,"closePrice":3065,"volume":21100}];
+	// var stockData = [{"stockCode":1234,"date":"2019-07-12 09:00:00","highPrice":3068,"lowPrice":3030,"openPrice":3065,"closePrice":3060,"volume":22200},
+	// 				{"stockCode":1234,"date":"2019-07-11 09:00:00","highPrice":3095,"lowPrice":3020,"openPrice":3030,"closePrice":3065,"volume":21100},
+	// 				{"stockCode":1234,"date":"2019-07-12 09:00:00","highPrice":3068,"lowPrice":3030,"openPrice":3065,"closePrice":3060,"volume":22200},
+	// 				{"stockCode":1234,"date":"2019-07-11 09:00:00","highPrice":3095,"lowPrice":3020,"openPrice":3030,"closePrice":3065,"volume":21100}];
 
 		console.log("テスト動作");
 	  drawCandleStickChart(stockData);
@@ -118,7 +116,6 @@ function drawBarChart(stockData){
 		chart.draw(chartData_volume, options);
 }
 
-/*]]>*/
 </script>
 </body>
 </html>

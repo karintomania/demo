@@ -25,13 +25,9 @@ public class StockService {
 	@Autowired
 	private StockRepository stockRepository;
 
-	public List<Price> get_rate() {
+	public List<Price> get_rate(int stockCode) {
 
-		List<Price> listPrice = priceRepository.findByStockCode(1234);
-		for (Price pr : listPrice) {
-			System.out.println(pr.getDate());
-			System.out.println(pr.getHighPrice());
-		}
+		List<Price> listPrice = priceRepository.findByStockCode(stockCode);
 
 		return listPrice;
 	}
