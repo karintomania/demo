@@ -46,23 +46,21 @@ public class StockService {
 		add_stock_stockTable(doc,stockCode);
 	}
 
+	// stockテーブルに銘柄情報を格納
 	private void add_stock_stockTable(Document doc,int stockCode){
 
 		Stock stock = new Stock();
 
 		Element nameElem = doc.select("."+Const.Stock.STOCK_NAME_CLASS).first();
 		Element spanElem = nameElem.select("span").first();
-		System.out.println("stockName="+spanElem.text());
 
 		stock.setName(spanElem.text());
 		stock.setStockCode(stockCode);
 
-
-		System.out.println("stock.name="+spanElem.text());
-
 		stockRepository.save(stock);
 	}
 
+	// priceテーブルに株価を格納
 	private void add_stock_priceTable(Document doc,int stockCode) throws Exception {
 
 		ArrayList<Price> liPrice = new ArrayList<Price>();

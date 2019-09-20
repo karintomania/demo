@@ -6,50 +6,43 @@
 </head>
 <body>
 <!--- 銘柄コードを受け付けるボックス --->
-	<input type = "text" maxlength = "4" id='input'>
-    <select id="span">
-        <option value="6m" selected>
-            6m
-		</option>
-    </select>
+	<input type = "text" maxlength = "4" id='input' value="2301">
 	<button id='btn' onclick="mainChart()">Get Info</button>
-<!--- 描画期間を選ばせるプルダウンメニュー --->
-    <select id="span">
-        <option value="6m" selected>
-            6m
-        </option>
-        <option value="1y">
-            1y
-        </option>
-        <option value="2y">
-            2y
-        </option>
-        <option value="5y">
-            5y
-        </option>
-    </select>
 <!--- ローソク足及び移動平均線グラフを配置 --->
     <div id='appendMain'></div>
 <!--- 出来高の棒グラフを配置 --->
     <div id='appendVolume'></div>
 <script src="http://code.jquery.com/jquery-1.10.1.min.js"></script>
-<!--- ここでGoogle Chartの読み込み --->
+
+<!--- Google Chartの読み込み --->
 <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
 <script type="text/javascript" th:inline="javascript">
 /*<![CDATA[*/
 
-    // var user = /*[[${listPrice}]]*/ null;
-
-	// まずはJSのみを完成させるためにベタ打ちしてる
-    var stockData = [{"stockCode":1234,"date":"2019-07-12 09:00:00","highPrice":3068,"lowPrice":3030,"openPrice":3065,"closePrice":3060,"volume":22200},{"stockCode":1234,"date":"2019-07-11 09:00:00","highPrice":3095,"lowPrice":3020,"openPrice":3030,"closePrice":3065,"volume":21100}];
 
 
-function mainChart(){
+
+window.onload  = function(){
 
 	  google.charts.load('current', {'packages':['corechart']});
 
+	  google.charts.setOnLoadCallback(mainChart);
+}
+
+function mainChart(){
+
+	// var stockData = /*[[${listPrice}]]*/ null;
+	
+	// まずはJSのみを完成させるためにベタ打ちしてる
+	var stockData = [{"stockCode":1234,"date":"2019-07-12 09:00:00","highPrice":3068,"lowPrice":3030,"openPrice":3065,"closePrice":3060,"volume":22200},
+					{"stockCode":1234,"date":"2019-07-11 09:00:00","highPrice":3095,"lowPrice":3020,"openPrice":3030,"closePrice":3065,"volume":21100},
+					{"stockCode":1234,"date":"2019-07-12 09:00:00","highPrice":3068,"lowPrice":3030,"openPrice":3065,"closePrice":3060,"volume":22200},
+					{"stockCode":1234,"date":"2019-07-11 09:00:00","highPrice":3095,"lowPrice":3020,"openPrice":3030,"closePrice":3065,"volume":21100}];
+
+		console.log("テスト動作");
 	  drawCandleStickChart(stockData);
 	  drawBarChart(stockData);
+		console.log("テスト動作2");
 
 }
 
