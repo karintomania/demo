@@ -6,57 +6,65 @@
 </head>
 <body>
 <!--- 銘柄コードを受け付けるボックス --->
-	<input type = "text" maxlength = "4" id='input' value="2301">
-	<button id='btn' onclick="mainChart()">Get Info</button>
+	<input type = "text" maxlength = "4" id='stockCodetext' value="2301">
+	<button id='drawChart'>チャート描画</button>
 <!--- ローソク足及び移動平均線グラフを配置 --->
     <div id='appendMain'></div>
 <!--- 出来高の棒グラフを配置 --->
     <div id='appendVolume'></div>
-<script src="http://code.jquery.com/jquery-1.10.1.min.js"></script>
 
-<!--- Google Chartの読み込み --->
+<script src="http://localhost:8080/jquery-3.4.1.min.js"></script>
+<script src="../static/jquery-3.4.1.min.js"></script>
 <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
-<script type="text/javascript" th:inline="javascript">
+<script type="text/javascript">
 
 
-window.onload  = function(){
 
-	  google.charts.load('current', {'packages':['corechart']});
+$(document).ready(function(){
 
-	  google.charts.setOnLoadCallback(mainChart);
-}
+	$("#drawChart").click(function(){
+		google.charts.load('current', {'packages':['corechart']});
+		google.charts.setOnLoadCallback(mainChart);
+	});
+
+});
+
 
 function mainChart(){
 
-/*<![CDATA[*/
-	var stockData = /*[[${listPrice}]]*/ null;
-/*]]>*/
-	// まずはJSのみを完成させるためにベタ打ちしてる
-	// var stockData = [{"stockCode":1234,"date":"2019-07-12 09:00:00","highPrice":3068,"lowPrice":3030,"openPrice":3065,"closePrice":3060,"volume":22200},
-	// 				{"stockCode":1234,"date":"2019-07-11 09:00:00","highPrice":3095,"lowPrice":3020,"openPrice":3030,"closePrice":3065,"volume":21100},
-	// 				{"stockCode":1234,"date":"2019-07-12 09:00:00","highPrice":3068,"lowPrice":3030,"openPrice":3065,"closePrice":3060,"volume":22200},
-	// 				{"stockCode":1234,"date":"2019-07-11 09:00:00","highPrice":3095,"lowPrice":3020,"openPrice":3030,"closePrice":3065,"volume":21100}];
+	var stockCode = $("#stockCodetext").val();
 
-		console.log("テスト動作");
-	  drawCandleStickChart(stockData);
-	  drawBarChart(stockData);
-		console.log("テスト動作2");
+	$.ajax({
+		type : "POST",
+		url : "http://localhost:8080/getPriceList",
+		data : {stockCode: stockCode},
+		success : function(data) {
+			console.log("SUCCESS: ", data);
+			drawCandleStickChart(data);
+			drawBarChart(data);
+		},
+		error : function(e) {
+			console.log("ERROR: ", e);
+			alert(e);
+		}
+	})
 
 }
 
 
+// ロウソク足チャートの描画
 function drawCandleStickChart(stockData){
 
-//チャートに描画するための最終的なデータを入れる
+	//チャートに描画するための最終的なデータを入れる
     var chartData = new google.visualization.DataTable();
-//日付ようにString型のカラムを一つ、チャート描画用に数値型のカラムを７つ作成
+		//日付ようにString型のカラムを一つ、チャート描画用に数値型のカラムを７つ作成
         chartData.addColumn('string');
         for(var x = 0;x < 4; x++){
             chartData.addColumn('number');
 		}
 		
-//チャート描画用の配列の中に、insertingDataの値を入れ込む
-// [日付, 安値, 始値, 終値, 高値]
+		//チャート描画用の配列の中に、insertingDataの値を入れ込む
+		// [日付, 安値, 始値, 終値, 高値]
         for (var i = 0; i < stockData.length; i++){
             chartData.addRow([String(stockData[i].date).substr(0,10),parseFloat(stockData[i].lowPrice),parseFloat(stockData[i].openPrice),parseFloat(stockData[i].closePrice),parseFloat(stockData[i].highPrice)]);
 		}
@@ -76,25 +84,24 @@ function drawCandleStickChart(stockData){
             width: 1200,
             height: 400,
             lineWidth: 2,
-//チャートのタイプとして、ローソク足を指定
+			//チャートのタイプとして、ローソク足を指定
             seriesType: "candlesticks"
         };
-//描画の処理
+		//描画の処理
         var chart = new google.visualization.CandlestickChart(document.getElementById('appendMain'));
 		chart.draw(chartData, options);
 }		
 
-function drawBarChart(stockData){
-	
 //出来高の方
+function drawBarChart(stockData){
 		
-//チャートに描画するための最終的なデータを入れる
+	//チャートに描画するための最終的なデータを入れる
     var chartData_volume = new google.visualization.DataTable();
-//日付ようにString型のカラムを一つ、チャート描画用に数値型のカラムを７つ作成
+		//日付ようにString型のカラムを一つ、チャート描画用に数値型のカラムを７つ作成
         chartData_volume.addColumn('string');
 		chartData_volume.addColumn('number');
-//チャート描画用の配列の中に、insertingDataの値を入れ込む
-// [日付, 出来高]
+		//チャート描画用の配列の中に、insertingDataの値を入れ込む
+		// [日付, 出来高]
         for (var i = 0; i < stockData.length; i++){
             chartData_volume.addRow([String(stockData[i].date).substr(0,10),parseFloat(stockData[i].volume)]);
 		}
@@ -111,7 +118,7 @@ function drawBarChart(stockData){
             height: 400,
             lineWidth: 2,
         };
-//描画の処理
+		//描画の処理
         var chart = new google.visualization.ColumnChart(document.getElementById('appendVolume'));
 		chart.draw(chartData_volume, options);
 }
