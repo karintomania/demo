@@ -38,7 +38,7 @@ public class StockService {
 		String url = Const.Stock.STOCK_SOURCE_URL.replace("{stockCode}", Integer.toString(stockCode));
 		Document doc = Jsoup.connect(url).get();
 
-		add_stock_priceTable(doc,stockCode);
+		// add_stock_priceTable(doc,stockCode);
 		add_stock_stockTable(doc,stockCode);
 	}
 
@@ -46,11 +46,18 @@ public class StockService {
 	private void add_stock_stockTable(Document doc,int stockCode){
 
 		Stock stock = new Stock();
+		String stockText;
+		String stockName;
 
+		// Class名でタグ絞り込み、子要素のspanから株価銘柄名を取得
 		Element nameElem = doc.select("."+Const.Stock.STOCK_NAME_CLASS).first();
 		Element spanElem = nameElem.select("span").first();
 
-		stock.setName(spanElem.text());
+		stockText = spanElem.text();
+		System.out.println(stockText);
+
+		stockName = stockText;
+		stock.setName(stockName);
 		stock.setStockCode(stockCode);
 
 		stockRepository.save(stock);
@@ -71,7 +78,6 @@ public class StockService {
 		// テーブルの列要素(tdタグ)を配列で取得
 		for(Element trElem : trElems){
 			Elements tdElems = trElem.getElementsByTag("td");
-			System.out.println("tdElems.size()="+Integer.toString(tdElems.size()));
 			Price price = new Price();
 
 			price.setStockCode(stockCode);
