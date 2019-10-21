@@ -56,7 +56,9 @@ public class StockService {
 		stockText = spanElem.text();
 		System.out.println(stockText);
 
-		stockName = stockText;
+		// 「nnnn 銘柄名」のパターンから銘柄コードを削除
+		stockName = stockText.replaceAll("^\\d{4} ", "");
+
 		stock.setName(stockName);
 		stock.setStockCode(stockCode);
 

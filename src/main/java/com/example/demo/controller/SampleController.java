@@ -22,7 +22,7 @@ public class SampleController {
     public String test(String str) {
 		String replacedStr;
 
-		replacedStr = str.replaceAll("¥d", "");
+		replacedStr = str.replaceAll("^\\d{4} ", "");
 		return replacedStr;
     }
 
