@@ -38,7 +38,7 @@ public class StockService {
 		String url = Const.Stock.STOCK_SOURCE_URL.replace("{stockCode}", Integer.toString(stockCode));
 		Document doc = Jsoup.connect(url).get();
 
-		// add_stock_priceTable(doc,stockCode);
+		add_stock_priceTable(doc,stockCode);
 		add_stock_stockTable(doc,stockCode);
 	}
 
