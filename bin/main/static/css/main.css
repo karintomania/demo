@@ -1,0 +1,26 @@
+
+
+
+body {
+	font-family:   arial,helvetica,sans-serif;
+	background-image: url(../images/tower.jpeg);
+	background-size: cover;
+}
+
+input,button{
+	font-family: inherit;
+}
+
+main {
+	background-color: rgba(0, 0, 0,0.7);
+	height: 80vh;
+	padding: 1em 3em;
+	margin: 3em;
+}
+
+.logo {
+	color: white;
+	font-family: Tahoma, Geneva, sans-serif;
+	font-weight: normal;
+	margin: auto;
+}
