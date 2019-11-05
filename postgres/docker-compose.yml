@@ -1,0 +1,11 @@
+version: "3"
+services:
+  psql_docker:
+    image: postgres:12.0-alpine
+    container_name: psql_demo
+    ports:
+      - "5432:5432"
+    environment:
+       POSTGRES_USER: "user_spring"
+       POSTGRES_PASSWORD: "123"
+       POSTGRES_DB: "spring"
