@@ -73,7 +73,7 @@ function drawCandleStickChart(stockData){
 		
         var options = {
             // chartArea:{left:80,top:10,right:80,bottom:10},
-            colors: ['#003A76'],
+            // colors: ['#003A76'],
             legend: {
                 position: 'none',
             },
@@ -83,8 +83,8 @@ function drawCandleStickChart(stockData){
             bar: { 
                 groupWidth: '50%' 
             },
-            width: 1200,
-            height: 400,
+            // width: 1200,
+            // height: 400,
             lineWidth: 2,
 			//チャートのタイプとして、ローソク足を指定
             seriesType: "candlesticks"
@@ -109,15 +109,15 @@ function drawBarChart(stockData){
 		}
 
         var options = {
-            colors: ['#003A76'],
+            // colors: ['#003A76'],
             legend: {
                 position: 'none',
             },
             bar: { 
                 groupWidth: '50%' 
             },
-            width: 1200,
-            height: 400,
+            // width: 1200,
+            // height: 400,
             lineWidth: 2,
         };
 		//描画の処理
