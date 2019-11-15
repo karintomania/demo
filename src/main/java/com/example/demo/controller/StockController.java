@@ -1,9 +1,8 @@
 package com.example.demo.controller;
 
-import java.util.List;
 
+import com.example.demo.dto.ChartInfo;
 import com.example.demo.dto.StockSearchCriteria;
-import com.example.demo.entity.Price;
 import com.example.demo.service.StockService;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -33,12 +32,12 @@ public class StockController {
 	// S02_チャート表示用データ送信用API
 	@ResponseBody
 	@PostMapping("/getPriceList")
-	public List<Price> get_pricelist(StockSearchCriteria ssc){
+	public ChartInfo get_pricelist(StockSearchCriteria ssc){
 		System.out.println("銘柄コード"+ssc.getStockCode());
 
-		List<Price> result = stockService.get_rate(ssc.getStockCode());
+		ChartInfo chartInfo = stockService.get_chart_info(ssc.getStockCode());
 
-		return result;
+		return chartInfo;
 	}
 
 	// S03_銘柄追加画面の表示

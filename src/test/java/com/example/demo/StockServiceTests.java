@@ -1,11 +1,9 @@
 package com.example.demo;
 
-import static org.junit.jupiter.api.Assertions.assertAll;
-import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.*;
 
-import java.util.List;
 
-import com.example.demo.entity.Price;
+import com.example.demo.dto.ChartInfo;
 import com.example.demo.service.StockService;
 
 import org.junit.jupiter.api.Test;
@@ -20,12 +18,11 @@ class StockServiceTests {
 	StockService stockService;
 
 	@Test
-	void get_rate_test() {
+	void get_chart_info_test() {
 		int stockCode = 2301;
-		List<Price> listPrice = stockService.get_rate(stockCode);
+		ChartInfo chartInfo = stockService.get_chart_info(stockCode);
 
-		System.out.println(listPrice.get(0).toString());
-		assertEquals(listPrice.get(0).getStockCode(),stockCode);
+		assertEquals(chartInfo.getStock().getStockCode(),stockCode);
 	}
 
 }

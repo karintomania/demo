@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.example.demo.constant.Const;
+import com.example.demo.dto.ChartInfo;
 import com.example.demo.entity.Price;
 import com.example.demo.entity.Stock;
 import com.example.demo.repository.PriceRepository;
@@ -25,11 +26,15 @@ public class StockService {
 	@Autowired
 	private StockRepository stockRepository;
 
-	public List<Price> get_rate(int stockCode) {
+	public ChartInfo get_chart_info(int stockCode) {
+		ChartInfo ci = new ChartInfo();
+		
+		List<Price> priceList = priceRepository.findByStockCode(stockCode);
+		Stock stock = stockRepository.findByStockCode(stockCode);
 
-		List<Price> listPrice = priceRepository.findByStockCode(stockCode);
-
-		return listPrice;
+		ci.setPriceList(priceList);
+		ci.setStock(stock);
+		return ci;
 	}
 
 	public void add_stock(int stockCode) throws Exception {

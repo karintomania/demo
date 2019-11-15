@@ -10,5 +10,5 @@ import com.example.demo.entity.Stock;
 // CRUD refers Create, Read, Update, Delete
 @Repository
 public interface StockRepository extends JpaRepository<Stock, String> {
-
+	Stock findByStockCode(int stockCode);
 }
