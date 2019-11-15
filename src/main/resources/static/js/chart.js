@@ -1,10 +1,9 @@
 $(document).ready(function(){
 
-	google.charts.load('current', {'packages':['corechart']});
-	google.charts.setOnLoadCallback(mainChart);
-
 	$("#drawChart").click(function(){
-		alert("onload");
+		google.charts.load('current', {'packages':['corechart']});
+		google.charts.setOnLoadCallback(mainChart);
+
 	});
 
 
@@ -22,8 +21,9 @@ function mainChart(){
 			data : {stockCode: stockCode},
 			success : function(data) {
 				console.log("SUCCESS: ", data);
-				drawCandleStickChart(data);
-				drawBarChart(data);
+				displayCompanyInfo(data.stock);
+				drawCandleStickChart(data.priceList);
+				drawBarChart(data.priceList);
 			},
 			error : function(e) {
 				console.log("ERROR: ", e);
@@ -67,7 +67,7 @@ function drawCandleStickChart(stockData){
 			},
 			chartArea:{
 				left: 50,
-				width: chartContainer.offsetWidth
+				width: chartContainer.offsetWidth * 0.9
 			},
 			height: screen.height *0.5,
 		};
@@ -97,7 +97,7 @@ function drawBarChart(stockData){
 		bar: { groupWidth: '50%' },
 		chartArea:{
 			left: 50,
-			width: chartContainer.offsetWidth
+			width: chartContainer.offsetWidth * 0.9
 		},
 		height: chartContainer.offsetWidth * 0.2,
 		hAxis: { textPosition: 'none' }
@@ -108,6 +108,10 @@ function drawBarChart(stockData){
 		chart.draw(chartData_volume, options);
 }
 
+function displayCompanyInfo(companyInfo){
+	var companyInfo = companyInfo.stockCode + " : " +companyInfo.name;
+	$("#companyInfo").text(companyInfo);
+}
 
 function testDraw(){
 

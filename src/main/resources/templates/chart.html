@@ -25,7 +25,7 @@
 			</ul>
 			<form class="form-inline">
 				<input class="form-control mr-sm-2" id="stockCodetext" type="text" placeholder="Search" aria-label="Search">
-				<button class="btn btn-outline-primary my-2 my-sm-0" type="submit">Search</button>
+				<button class="btn btn-outline-primary my-2 my-sm-0" id="drawChart" type="button">Search</button>
 			</form>
 		</div>
 	</header>
@@ -34,7 +34,7 @@
 	<main role="main" class="pt-3">
 	<div class="container-fluid">
 		<div class="pt-2 pb-2 border-bottom">
-			<h1 class="h3">2301:(株)きくけコーポレート</h1>
+			<h1 class="h3"><span id="companyInfo"></span></h1>
 		</div>
 		<!--- ローソク足及び移動平均線グラフを配置 --->
 		<div class="container mt-0" id="chart_container">
@@ -44,7 +44,7 @@
 		</div>
 	  </div>
 	</main>
-	  <script th:src="@{/js/jquery-3.3.1.slim.min.js}" src="../static/js/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+	  <script th:src="@{/js/jquery-3.4.1.min.js}" src="../static/js/jquery-3.4.1.min.js"></script>
 	  <!-- <script>window.jQuery || document.write('<script src="/docs/4.3/assets/js/vendor/jquery-slim.min.js"><\/script>')</script> -->
 	  <script th:src="@{/js/bootstrap.bundle.min.js}" src="../static/js/bootstrap.bundle.min.js" integrity="sha384-xrRywqdh3PHs8keKZN+8zzc5TX0GRTLCcmivcbNJWm2rs5C8PRhcEn3czEjhAO9o" crossorigin="anonymous"></script>
 	<script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>

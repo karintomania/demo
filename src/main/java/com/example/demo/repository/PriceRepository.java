@@ -14,5 +14,5 @@ import com.example.demo.entity.Price;
 @Repository
 public interface PriceRepository extends JpaRepository<Price, Integer> {
 	List<Price> findByStockCode(int stockCode);
-	List<Price> findByHighPrice(int highPrice);
+	List<Price> findByStockCodeOrderByDateAsc(int stockCode);
 }

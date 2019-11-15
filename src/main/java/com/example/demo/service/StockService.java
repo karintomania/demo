@@ -29,7 +29,7 @@ public class StockService {
 	public ChartInfo get_chart_info(int stockCode) {
 		ChartInfo ci = new ChartInfo();
 		
-		List<Price> priceList = priceRepository.findByStockCode(stockCode);
+		List<Price> priceList = priceRepository.findByStockCodeOrderByDateAsc(stockCode);
 		Stock stock = stockRepository.findByStockCode(stockCode);
 
 		ci.setPriceList(priceList);
