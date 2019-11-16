@@ -1,7 +1,8 @@
 $(document).ready(function(){
-	$("#drawChart").click(function(){
+	$("#searchStock").submit(function(event){
 		google.charts.load('current', {'packages':['corechart']});
 		google.charts.setOnLoadCallback(mainChart);
+		event.preventDefault();
 
 	});
 
@@ -12,15 +13,11 @@ function mainChart(){
 	var stockCode = $("#stockCodetext").val();
 
 	// testDraw();
-
-    /*<![CDATA[*/
-        var context = /*[[ @{/} ]]*/ "http://localhost:8080";
-	/*]]>*/
 	
 	if(stockCode != ""){
 		$.ajax({
 			type : "POST",
-			url : context + "/getPriceList",
+			url : "/getPriceList",
 			data : {stockCode: stockCode},
 			success : function(data) {
 				console.log("SUCCESS: ", data);

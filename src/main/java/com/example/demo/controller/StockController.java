@@ -1,10 +1,11 @@
 package com.example.demo.controller;
 
-
 import com.example.demo.dto.ChartInfo;
 import com.example.demo.dto.StockSearchCriteria;
 import com.example.demo.service.StockService;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -20,10 +21,12 @@ public class StockController {
 	@Autowired
 	private StockService stockService;
 
+	private static Logger log = LoggerFactory.getLogger(StockController.class);
+
 	// S01_チャート表示対象銘柄選択画面の表示
 	@RequestMapping("/")
 	public ModelAndView top(ModelAndView mav) {
-
+		log.info("/ called");
 		mav.setViewName("chart");
 		return mav;
 	}
@@ -33,7 +36,7 @@ public class StockController {
 	@ResponseBody
 	@PostMapping("/getPriceList")
 	public ChartInfo get_pricelist(StockSearchCriteria ssc){
-		System.out.println("銘柄コード"+ssc.getStockCode());
+		log.info("銘柄コード:{}",ssc.getStockCode());
 
 		ChartInfo chartInfo = stockService.get_chart_info(ssc.getStockCode());
 
