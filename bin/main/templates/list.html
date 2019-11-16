@@ -1,22 +1,16 @@
 <!DOCTYPE html>
-<!-- saved from url=(0054)https://getbootstrap.com/docs/4.3/examples/dashboard/# -->
-<html lang="en"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-    
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <title>Dashboard Template · Bootstrap</title>
-
-    <!-- Bootstrap core CSS -->
-<link href="./Dashboard Template · Bootstrap_files/bootstrap.min.css" rel="stylesheet" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
-
-
-    <!-- Custom styles for this template -->
-    <link href="./Dashboard Template · Bootstrap_files/dashboard.css" rel="stylesheet">
-  <style type="text/css">/* Chart.js */
-@-webkit-keyframes chartjs-render-animation{from{opacity:0.99}to{opacity:1}}@keyframes chartjs-render-animation{from{opacity:0.99}to{opacity:1}}.chartjs-render-monitor{-webkit-animation:chartjs-render-animation 0.001s;animation:chartjs-render-animation 0.001s;}</style></head>
+<html lang="en">
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+	<title>株価チャート表示くん</title>
+	<link th:href="@{/css/bootstrap.min.css}" href="../static/css/bootstrap.min.css" rel="stylesheet">
+	<link th:href="@{/css/chart.css}" href="../static/css/chart.css" rel="stylesheet">
+</head>
   <body>
     <header class="navbar navbar-expand-md navbar-dark bg-dark">
 		<!-- navブランド -->
-		<a class="navbar-brand" href="https://getbootstrap.com/docs/4.3/examples/dashboard/#">株価チャート表示くん</a>
+		<a class="navbar-brand" th:href="@{/}" href="./chart.html">株価チャート表示くん</a>
 		<!-- ヘッダートグルボタン -->
 		<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#header_nav" aria-controls="header_nav" aria-expanded="false" aria-label="Toggle navigation">
 			<span class="navbar-toggler-icon"></span>
@@ -24,54 +18,56 @@
 		<!-- navリスト -->
 		<div class="collapse navbar-collapse" id="header_nav">
 			<ul class="navbar-nav mr-auto">
-				<li class="nav-item"><a class="nav-link" href="/index.html">チャート表示</a></li>
-				<li class="nav-item"><a class="nav-link" href="/list.html">銘柄リスト</a></li>
+				<li class="nav-item"><a class="nav-link" th:href="@{/}" href="./chart.html">チャート表示</a></li>
+				<li class="nav-item"><a class="nav-link" th:href="@{/list}" href="./list.html">銘柄リスト</a></li>
 			</ul>
-			<form class="form-inline">
-				<input class="form-control mr-sm-2" type="text" placeholder="Search" aria-label="Search">
-				<button class="btn btn-outline-primary my-2 my-sm-0" type="submit">Search</button>
+		<!-- 検索フォーム -->
+			<form class="form-inline" id="searchStock">
+				<input class="form-control mr-sm-2" id="stockCodetext" type="text" placeholder="Search" aria-label="Search">
+				<button class="btn btn-outline-primary my-2 my-sm-0" id="drawChart" type="submit">Search</button>
 			</form>
 		</div>
 	</header>
 
 	<main role="main" class="px-4 pt-4">
+		<div class="container-fluid">
+			<div class="row justify-content-around">
+				<div class="card mt-5 col-md-4">
+					<div class="card-body">
+						<h3 class="card-title">新規追加</h3>
+						<form class="form-inline">
+						<input class="form-control mr-sm-2" type="text" placeholder="銘柄コード">
+						<button class="btn btn-primary my-2 my-sm-0" type="submit">Add</button>
+						</form>
+					</div>
+				</div>
 
-		<div class="card mt-5">
-			<div class="card-body">
-				<h3 class="card-title">新規銘柄の追加</h3>
-				<form class="form-inline">
-				<input class="form-control mr-sm-2" type="text" placeholder="銘柄コード">
-				<button class="btn btn-primary my-2 my-sm-0" type="submit">Add</button>
-				</form>
+				<div class="card mt-5 col-md-7">
+					<div class="card-body">
+					<h3 class="card-title">株価一覧</h3>
+					<p class="card-text">
+					<table class="table table-bordered table-striped table-hover w-auto mt-5">
+						<thead>
+							<tr>
+								<th scope="col">銘柄コード</th>
+								<th scope="col">企業名</th>
+								<th scope="col">削除</th>
+							</tr>
+						</thead>
+							<tr th:each="stock: ${stockList}">
+								<td th:text="${stock.stockCode}">0000</td>
+								<td><a th:text="${stock.name}" th:href="@{/(stockCode=${stock.stockCode})}" href="#">株式会社サンプル</a></td>
+								<td><button class="btn btn-danger">削除</button></td>
+							</tr>
+					</table>
+					</p>
+					</div>
 			</div>
 		</div>
-
-		<div class="card mt-5">
-			<div class="card-body">
-			<h3 class="card-title">株価一覧</h3>
-			<p class="card-text">
-			<table class="table table-bordered table-striped table-hover w-auto mt-5">
-				<thead>
-					<tr>
-						<th scope="col">銘柄コード</th>
-						<th scope="col">企業名</th>
-						<th scope="col">削除</th>
-					</tr>
-				</thead>
-					<tr>
-						<td>1234</td>
-						<td><a href="#">株式会社ばちばち</a></td>
-						<td><button class="btn btn-danger">削除</button></td>
-					</tr>
-			</table>
-			</p>
-			</div>
-		</div>
+	</div>
 	</main>
-	  <script src="./Dashboard Template · Bootstrap_files/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
-      <script>window.jQuery || document.write('<script src="/docs/4.3/assets/js/vendor/jquery-slim.min.js"><\/script>')</script><script src="./Dashboard Template · Bootstrap_files/bootstrap.bundle.min.js" integrity="sha384-xrRywqdh3PHs8keKZN+8zzc5TX0GRTLCcmivcbNJWm2rs5C8PRhcEn3czEjhAO9o" crossorigin="anonymous"></script>
-        <script src="./Dashboard Template · Bootstrap_files/feather.min.js"></script>
-        <script src="./Dashboard Template · Bootstrap_files/Chart.min.js"></script>
-        <script src="./Dashboard Template · Bootstrap_files/dashboard.js"></script>
-
+	  <script th:src="@{/js/jquery-3.4.1.min.js}" src="../static/js/jquery-3.4.1.min.js"></script>
+	  <script th:src="@{/js/bootstrap.bundle.min.js}" src="../static/js/bootstrap.bundle.min.js"></script>
+	<script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+	<script th:src="@{/js/list.js}" src="../static/js/list.js"></script>
 </body></html>

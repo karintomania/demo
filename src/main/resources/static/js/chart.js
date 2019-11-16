@@ -1,8 +1,14 @@
 $(document).ready(function(){
+
+
+	// 初期画面表示時
+	google.charts.load('current', {'packages':['corechart']});
+	google.charts.setOnLoadCallback(mainChart);
+
+	//  検索時
 	$("#searchStock").submit(function(event){
 		google.charts.load('current', {'packages':['corechart']});
 		google.charts.setOnLoadCallback(mainChart);
-		$("#companyInfoContainer").removeClass('d-none');
 		event.preventDefault();
 
 	});

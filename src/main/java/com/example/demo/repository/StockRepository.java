@@ -4,6 +4,8 @@ package com.example.demo.repository;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
+import java.util.List;
+
 import com.example.demo.entity.Stock;
 
 // This will be AUTO IMPLEMENTED by Spring into a Bean called userRepository
@@ -11,4 +13,5 @@ import com.example.demo.entity.Stock;
 @Repository
 public interface StockRepository extends JpaRepository<Stock, String> {
 	Stock findByStockCode(int stockCode);
+	List<Stock> findAll();
 }

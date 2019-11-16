@@ -10,7 +10,7 @@
   <body>
     <header class="navbar navbar-expand-md navbar-dark bg-dark">
 		<!-- navブランド -->
-		<a class="navbar-brand" th:href="@{/}" href="./index_bs.html">株価チャート表示くん</a>
+		<a class="navbar-brand" th:href="@{/}" href="./chart.html">株価チャート表示くん</a>
 		<!-- ヘッダートグルボタン -->
 		<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#header_nav" aria-controls="header_nav" aria-expanded="false" aria-label="Toggle navigation">
 			<span class="navbar-toggler-icon"></span>
@@ -18,12 +18,12 @@
 		<!-- navリスト -->
 		<div class="collapse navbar-collapse" id="header_nav">
 			<ul class="navbar-nav mr-auto">
-				<li class="nav-item"><a class="nav-link" th:href="@{/}" href="./index_bs.html">チャート表示</a></li>
+				<li class="nav-item"><a class="nav-link" th:href="@{/}" href="./chart.html">チャート表示</a></li>
 				<li class="nav-item"><a class="nav-link" th:href="@{/list}" href="./list.html">銘柄リスト</a></li>
 			</ul>
 		<!-- 検索フォーム -->
 			<form class="form-inline" id="searchStock">
-				<input class="form-control mr-sm-2" id="stockCodetext" type="text" placeholder="Search" aria-label="Search">
+				<input class="form-control mr-sm-2" id="stockCodetext" type="text" placeholder="Search" aria-label="Search" th:value="${stockCode}" value="2301">
 				<button class="btn btn-outline-primary my-2 my-sm-0" id="drawChart" type="submit">Search</button>
 			</form>
 		</div>
@@ -31,8 +31,9 @@
 
 	<!-- メインコンテンツ -->
 	<main role="main" class="pt-3">
-	<div class="container-fluid">
-		<div id="companyInfoContainer" class="pt-2 pb-2 border-bottom d-none">
+	<!-- チャート表示用のコンテナ -->
+	<div id="chartContainer" class="container-fluid">
+		<div class="pt-2 pb-2 border-bottom">
 			<h1 class="h3" id="companyInfo"></h1>
 		</div>
 		<!--- ローソク足及び移動平均線グラフを配置 --->

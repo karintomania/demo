@@ -1,7 +1,11 @@
 package com.example.demo.controller;
 
+import java.util.List;
+
+import com.example.demo.constant.Const;
 import com.example.demo.dto.ChartInfo;
 import com.example.demo.dto.StockSearchCriteria;
+import com.example.demo.entity.Stock;
 import com.example.demo.service.StockService;
 
 import org.slf4j.Logger;
@@ -25,8 +29,15 @@ public class StockController {
 
 	// S01_チャート表示対象銘柄選択画面の表示
 	@RequestMapping("/")
-	public ModelAndView top(ModelAndView mav) {
+	public ModelAndView index(
+		ModelAndView mav,
+		@RequestParam(value = "stockCode", required=false) Integer stockCode
+	) {
 		log.info("/ called");
+
+		Integer stockCodeValid = stockCode != null ? stockCode : Const.Stock.STOCK_DEFAULT_STOCKCODE;
+		mav.addObject("stockCode", stockCodeValid);
+
 		mav.setViewName("chart");
 		return mav;
 	}
@@ -47,6 +58,9 @@ public class StockController {
 	// 銘柄一覧画面の表示
 	@RequestMapping("/list")
 	public ModelAndView list(ModelAndView mav) throws Exception {
+		
+		List<Stock> stockList = stockService.get_stock_list();
+		mav.addObject("stockList", stockList);
 
 		mav.setViewName("list");
 		return mav;
@@ -66,9 +80,7 @@ public class StockController {
 	public ModelAndView add_stock_complete(@RequestParam int stockCode,ModelAndView mav) throws Exception {
 
 		stockService.add_stock(stockCode);
-		mav.setViewName("addStockComplete");
-		mav.addObject("stockCodeStr",Integer.toString(stockCode));
+		mav.setViewName("redirect:list");
 		return mav;
-		
     }
 }

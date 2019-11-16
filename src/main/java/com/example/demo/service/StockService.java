@@ -26,6 +26,13 @@ public class StockService {
 	@Autowired
 	private StockRepository stockRepository;
 
+	// ------------
+	// DB参照系操作
+	// ------------
+
+	// 銘柄のチャート描画用データ取得
+	// ・会社情報
+	// ・日付ごとの株価データ
 	public ChartInfo get_chart_info(int stockCode) {
 		ChartInfo ci = new ChartInfo();
 		
@@ -37,6 +44,19 @@ public class StockService {
 		return ci;
 	}
 
+	// 株価一覧用データ取得
+	public List<Stock> get_stock_list() {
+		
+		List<Stock> stockList = stockRepository.findAll();
+
+		return stockList;
+	}
+
+
+
+	// ------------
+	// DB編集系操作
+	// ------------
 	public void add_stock(int stockCode) throws Exception {
 
 		// 株価取得サイトにGETでrequest飛ばす {baseUrl}/{銘柄コード}
