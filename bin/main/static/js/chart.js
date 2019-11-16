@@ -1,5 +1,4 @@
 $(document).ready(function(){
-
 	$("#drawChart").click(function(){
 		google.charts.load('current', {'packages':['corechart']});
 		google.charts.setOnLoadCallback(mainChart);
@@ -14,10 +13,14 @@ function mainChart(){
 
 	// testDraw();
 
+    /*<![CDATA[*/
+        var context = /*[[ @{/} ]]*/ "http://localhost:8080";
+	/*]]>*/
+	
 	if(stockCode != ""){
 		$.ajax({
 			type : "POST",
-			url : "http://localhost:8080/getPriceList",
+			url : context + "/getPriceList",
 			data : {stockCode: stockCode},
 			success : function(data) {
 				console.log("SUCCESS: ", data);
