@@ -43,6 +43,16 @@ public class StockController {
 		return chartInfo;
 	}
 
+
+	// 銘柄一覧画面の表示
+	@RequestMapping("/list")
+	public ModelAndView list(ModelAndView mav) throws Exception {
+
+		mav.setViewName("list");
+		return mav;
+		
+    }
+
 	// S03_銘柄追加画面の表示
 	@RequestMapping("/addStock")
 	public ModelAndView add_stock(ModelAndView mav) throws Exception {

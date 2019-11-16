@@ -2,6 +2,7 @@ $(document).ready(function(){
 	$("#searchStock").submit(function(event){
 		google.charts.load('current', {'packages':['corechart']});
 		google.charts.setOnLoadCallback(mainChart);
+		$("#companyInfoContainer").removeClass('d-none');
 		event.preventDefault();
 
 	});
